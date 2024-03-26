@@ -8,8 +8,9 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - SECRET_KEY=JuRkMgDcqt86NVPi8Wq04293p3kjxYRF
       - UPLOAD_FOLDER=/var/uploads
-      - DATABASE_URL=mysql+pymysql://ctfd:ctfd@db/ctfd
+      - DATABASE_URL=mysql+pymysql://chc405-ctfd:chc405-ctfd@db/ctfd
       - REDIS_URL=redis://cache:6379
       - WORKERS=1
       - LOG_FOLDER=/var/log/CTFd
@@ -40,9 +41,9 @@ services:
     image: mariadb:10.4.12
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=ctfd
-      - MYSQL_USER=ctfd
-      - MYSQL_PASSWORD=ctfd
+      - MYSQL_ROOT_PASSWORD=chc405-ctfd
+      - MYSQL_USER=chc405-ctfd
+      - MYSQL_PASSWORD=chc405-ctfd
       - MYSQL_DATABASE=ctfd
     volumes:
       - .data/mysql:/var/lib/mysql
