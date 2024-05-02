@@ -1,0 +1,3 @@
+[submodule "plugins/CTFd-Docker-Plugin"]
+	path = plugins/CTFd-Docker-Plugin
+	url = git@github.com:CloudMeshSolutions/CTFd-Docker-Plugin.git
