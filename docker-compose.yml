@@ -39,13 +39,14 @@ services:
       - ctfd
 
   db:
-    image: mariadb:10.4.12
+    image: mariadb:10.11
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=chc405-ctfd
       - MYSQL_USER=chc405-ctfd
       - MYSQL_PASSWORD=chc405-ctfd
       - MYSQL_DATABASE=ctfd
+      - MARIADB_AUTO_UPGRADE=1
     volumes:
       - .data/mysql:/var/lib/mysql
     networks:
