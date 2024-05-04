@@ -5,8 +5,6 @@ services:
     build: .
     user: root
     restart: always
-    ports:
-      - "8000:8000"
     environment:
       - SECRET_KEY=JuRkMgDcqt86NVPi8Wq04293p3kjxYRF
       - UPLOAD_FOLDER=/var/uploads
