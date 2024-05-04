@@ -80,7 +80,7 @@ services:
       - VERIFICATION_DELAY=1
       - DB_NAME="flags.db"
     volumes:
-      - /srv/www/ctf-flag-validator:/app/
+      - /srv/www/ctf-flag-validator/:/app/
     restart: always
 
 networks:
