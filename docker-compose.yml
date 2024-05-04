@@ -72,9 +72,9 @@ services:
     ports:
       - "172.17.0.1:9512:9512"
     environment:
-      - CTFD_ADMIN_TOKEN=${CTFD_ADMIN_TOKEN}
-      - CTFD_INSTANCE=${CTFD_INSTANCE}
-      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - CTFD_ADMIN_TOKEN=${flags__CTFD_ADMIN_TOKEN}
+      - CTFD_INSTANCE=${flags__CTFD_INSTANCE}
+      - DISCORD_WEBHOOK_URL=${flags__DISCORD_WEBHOOK_URL}
       - API_HOST="0.0.0.0"
       - API_PORT=9512
       - VERIFICATION_DELAY=1
