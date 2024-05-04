@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 
 services:
   ctfd:
@@ -6,9 +6,9 @@ services:
     user: root
     restart: always
     environment:
-      - SECRET_KEY=JuRkMgDcqt86NVPi8Wq04293p3kjxYRF
+      - SECRET_KEY=${CTFD__SECRET_KEY}
       - UPLOAD_FOLDER=/var/uploads
-      - DATABASE_URL=mysql+pymysql://chc405-ctfd:chc405-ctfd@db/ctfd
+      - DATABASE_URL=${CTFD__DATABASE_URL}
       - REDIS_URL=redis://cache:6379
       - WORKERS=1
       - LOG_FOLDER=/var/log/CTFd
@@ -23,8 +23,8 @@ services:
     depends_on:
       - db
     networks:
-        default:
-        internal:
+      default:
+      internal:
 
   nginx:
     image: nginx:stable
@@ -40,27 +40,50 @@ services:
     image: mariadb:10.11
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=chc405-ctfd
-      - MYSQL_USER=chc405-ctfd
-      - MYSQL_PASSWORD=chc405-ctfd
-      - MYSQL_DATABASE=ctfd
+      - MYSQL_ROOT_PASSWORD=${DB__MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${DB__MYSQL_USER}
+      - MYSQL_PASSWORD=${DB__MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${DB__MYSQL_DATABASE}
       - MARIADB_AUTO_UPGRADE=1
     volumes:
       - .data/mysql:/var/lib/mysql
     networks:
-        internal:
+      internal:
     # This command is required to set important mariadb defaults
-    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --wait_timeout=28800, --log-warnings=0]
+    command:
+      [
+        mysqld,
+        --character-set-server=utf8mb4,
+        --collation-server=utf8mb4_unicode_ci,
+        --wait_timeout=28800,
+        --log-warnings=0,
+      ]
 
   cache:
     image: redis:4
     restart: always
     volumes:
-    - .data/redis:/data
+      - .data/redis:/data
     networks:
-        internal:
+      internal:
+
+  flags:
+    build: /srv/www/ctf-flag-validator
+    ports:
+      - "172.17.0.1:9512:9512"
+    environment:
+      - CTFD_ADMIN_TOKEN=${CTFD_ADMIN_TOKEN}
+      - CTFD_INSTANCE=${CTFD_INSTANCE}
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - API_HOST="0.0.0.0"
+      - API_PORT=9512
+      - VERIFICATION_DELAY=1
+      - DB_NAME="flags.db"
+    volumes:
+      - .:/app/
+    restart: always
 
 networks:
-    default:
-    internal:
-        internal: true
+  default:
+  internal:
+    internal: true
