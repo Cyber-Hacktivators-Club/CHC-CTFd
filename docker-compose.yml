@@ -70,7 +70,7 @@ services:
   flags:
     build: /srv/www/ctf-flag-validator
     ports:
-      - "172.17.0.1:9512:9512"
+      - "9512:9512"
     environment:
       - CTFD_ADMIN_TOKEN=${flags__CTFD_ADMIN_TOKEN}
       - CTFD_INSTANCE=${flags__CTFD_INSTANCE}
