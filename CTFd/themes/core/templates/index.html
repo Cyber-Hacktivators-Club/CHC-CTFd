@@ -1,0 +1,564 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+	/*base*/
+:root {
+  font-family: Inter, sans-serif;
+
+  --stripe-color: #000;
+  --bg: var(--stripe-color);
+  --maincolor: var(--bg);
+}
+
+.section_our_solution .row {
+  align-items: center;
+}
+
+.our_solution_category {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.our_solution_category .solution_cards_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.solution_cards_box .solution_card {
+  flex: 0 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(136, 195, 139, 0.2),
+    0 5px 15px 0 rgba(37, 97, 57, 0.15);
+  border-radius: 15px;
+  margin: 8px;
+  padding: 10px 15px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  min-height: 265px;
+  transition: 0.7s;
+}
+
+.solution_cards_box .solution_card:hover {
+  background: #30f06a;
+  color: #fff;
+  transform: scale(1.1);
+  z-index: 9;
+}
+
+.solution_cards_box .solution_card:hover::before {
+  background: rgba(85, 214, 113, 0.1);
+}
+
+.solution_cards_box .solution_card:hover .solu_title h3,
+.solution_cards_box .solution_card:hover .solu_description p {
+  color: #fff;
+}
+
+.solution_cards_box .solution_card:before {
+  content: "";
+  position: absolute;
+  background: rgba(85, 214, 113, 0.05);
+  width: 170px;
+  height: 400px;
+  z-index: -1;
+  transform: rotate(42deg);
+  right: -56px;
+  top: -23px;
+  border-radius: 35px;
+}
+
+.solution_cards_box .solution_card:hover .solu_description button {
+  background: #fff !important;
+  color: #30f06a;
+}
+
+/* .solution_card .so_top_icon {
+} */
+
+.solution_card .solu_title h3 {
+  color: #212121;
+  font-size: 1.3rem;
+  margin-top: 13px;
+  margin-bottom: 13px;
+}
+
+.solution_card .solu_description p {
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.solution_card .solu_description button {
+  border: 0;
+  border-radius: 15px;
+  background: linear-gradient(
+    140deg,
+    #4dca42 0%,
+    #4dca42 50%,
+    #4dca42c7 75%
+  ) !important;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 5px 16px;
+}
+
+.our_solution_content h1 {
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+.hover_color_bubble {
+  position: absolute;
+  background: rgba(54, 207, 62, 0.15);
+  width: 100rem;
+  height: 100rem;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  top: 16rem;
+  border-radius: 50%;
+  transform: rotate(-36deg);
+  left: -18rem;
+  transition: 0.7s;
+}
+
+.solution_cards_box .solution_card:hover .hover_color_bubble {
+  top: 0rem;
+}
+
+.solution_cards_box .solution_card .so_top_icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.solution_cards_box .solution_card .so_top_icon img {
+  width: 40px;
+  height: 50px;
+  object-fit: contain;
+}
+
+/*start media query*/
+@media screen and (min-width: 320px) {
+  .sol_card_top_3 {
+    position: relative;
+    top: 0;
+  }
+
+  .our_solution_category {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .our_solution_category .solution_cards_box {
+    flex: auto;
+  }
+  .our_solution_category {
+    flex-direction: column;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .our_solution_category .solution_cards_box {
+    flex: 1;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .sol_card_top_3 {
+    position: relative;
+    top: -3rem;
+  }
+  .our_solution_category {
+    width: 50%;
+    margin: 0 auto;
+    flex-direction: row;
+  }
+}
+
+@keyframes smoothBg {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  height: auto;
+  position: relative;
+  background: var(--bg);
+}
+
+.hero {
+  width: 100%;
+  height: 100%;
+  max-height: 50vh;
+  position: relative;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  --stripes: repeating-linear-gradient(
+    100deg,
+    var(--stripe-color) 0%,
+    var(--stripe-color) 7%,
+    transparent 10%,
+    transparent 12%,
+    var(--stripe-color) 16%
+  );
+
+  --rainbow: repeating-linear-gradient(
+    100deg,
+    #60fa9b 10%,
+    #79f9f2 15%,
+    #60a5fa 20%,
+    #96ea5e 25%,
+    #60fa68 30%
+  );
+  background-image: var(--stripes), var(--rainbow);
+  background-size: 300%, 200%;
+  background-position: 50% 50%, 50% 50%;
+
+  filter: blur(10px) invert(100%);
+
+  mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--stripes), var(--rainbow);
+    background-size: 200%, 100%;
+    animation: smoothBg 60s linear infinite;
+    background-attachment: fixed;
+    mix-blend-mode: difference;
+  }
+}
+
+.hero,
+.hero::after {
+  filter: blur(10px) opacity(50%) saturate(200%);
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  flex-flow: column;
+  gap: 4.5%;
+  text-align: center;
+  mix-blend-mode: difference;
+  -webbkit-mix-blend-mode: difference;
+  filter: invert(1);
+}
+
+.h1--scalingSize {
+  font-size: calc(1rem - -5vw);
+  position: relative;
+}
+
+/*challenge*/
+.h1--scalingSize::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  background: white;
+  text-shadow: 0 0 1px #ffffff;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-color: white;
+  -webkit-mask: linear-gradient(#000 0 0) luminance;
+  mask: linear-gradient(#000 0 0) luminance, alpha;
+  backdrop-filter: blur(19px) brightness(12.5);
+  -webkit-text-stroke: 1px white;
+  display: flex;
+  margin: auto;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flag {
+  opacity: 0.1;
+  text-align: end;
+  width: 100%;
+}   
+
+
+.hori-timeline .events {
+    border-top: 3px solid #e9ecef;
+}
+.hori-timeline .events .event-list {
+    display: block;
+    position: relative;
+    text-align: center;
+    padding-top: 70px;
+    margin-right: 0;
+}
+.hori-timeline .events .event-list:before {
+    content: "";
+    position: absolute;
+    height: 36px;
+    border-right: 2px dashed #dee2e6;
+    top: 0;
+}
+.hori-timeline .events .event-list .event-date {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    right: 0;
+    width: 75px;
+    margin: 0 auto;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+@media (min-width: 1140px) {
+    .hori-timeline .events .event-list {
+        display: inline-block;
+        width: 32%;
+        padding-top: 45px;
+    }
+    .hori-timeline .events .event-list .event-date {
+        top: -12px;
+    }
+}
+
+.event-date{
+  background-color: rgba(54, 207, 62, 0.15);
+  color: black;
+}
+.card {
+    border: none;
+    margin-bottom: 24px;
+    -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+    box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+}
+.btn-green{
+  background-color: rgba(54, 207, 62);
+}
+</style>
+<link
+rel="stylesheet"
+href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+/>
+<link rel="stylesheet" href="./styles.css" />
+<div class="max-w-screen-xl mb-5">
+<section class="wrapper">
+  <div class="hero"></div>
+  <div class="content">
+	<span class="flag">CHC{F0un9_1t}</span>
+	<h1 class="h1--scalingSize" data-text="Cyber Hactivators Club">
+	  Cyber Hactivators Club
+	</h1>
+	<h3>CHC</h3>
+  </div>
+</section>
+</div>
+<br /><br /><br /><br /><br />
+<div class="section_our_solution">
+	<div class="our_solution_category">
+	  <div class="solution_cards_box">
+		<h2>Intructions</h2>
+		<div class="solution_card">
+		  <div class="hover_color_bubble"></div>
+		  <div class="solu_title">
+			<h3>Demo 1</h3>
+		  </div>
+		  <div class="solu_description">
+			<p>
+			  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+			  velit sequi mollitia numquam eligendi nisi quam pariatur magnam?
+			  Sequi nulla corrupti nobis consequuntur obcaecati voluptatum
+			  quos harum eveniet maxime ducimus sunt beatae ad ex laudantium
+			  earum, ullam illo, quo at tempore exercitationem delectus?
+			  Molestiae earum sunt dolorum libero culpa minima!
+			</p>
+		  </div>
+		</div>
+		<div class="solution_card">
+		  <div class="hover_color_bubble"></div>
+		  <div class="solu_title">
+			<h3>Demo 2</h3>
+		  </div>
+		  <div class="solu_description">
+			<p>
+			  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+			  velit sequi mollitia numquam eligendi nisi quam pariatur magnam?
+			  Sequi nulla corrupti nobis consequuntur obcaecati voluptatum
+			  quos harum eveniet maxime ducimus sunt beatae ad ex laudantium
+			  earum, ullam illo, quo at tempore exercitationem delectus?
+			  Molestiae earum sunt dolorum libero culpa minima!
+			</p>
+		  </div>
+		</div>
+	  </div>
+	  <!--  -->
+	  <div class="solution_cards_box sol_card_top_3">
+		<div class="solution_card">
+		  <div class="hover_color_bubble"></div>
+		  <div class="solu_title">
+			<h3>Demo 3</h3>
+		  </div>
+		  <div class="solu_description">
+			<p>
+			  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+			  velit sequi mollitia numquam eligendi nisi quam pariatur magnam?
+			  Sequi nulla corrupti nobis consequuntur obcaecati voluptatum
+			  quos harum eveniet maxime ducimus sunt beatae ad ex laudantium
+			  earum, ullam illo, quo at tempore exercitationem delectus?
+			  Molestiae earum sunt dolorum libero culpa minima!
+			</p>
+		  </div>
+		</div>
+		<div class="solution_card">
+		  <div class="hover_color_bubble"></div>
+		  <div class="solu_title">
+			<h3>Demo 4</h3>
+		  </div>
+		  <div class="solu_description">
+			<p>
+			  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+			  velit sequi mollitia numquam eligendi nisi quam pariatur magnam?
+			  Sequi nulla corrupti nobis consequuntur obcaecati voluptatum
+			  quos harum eveniet maxime ducimus sunt beatae ad ex laudantium
+			  earum, ullam illo, quo at tempore exercitationem delectus?
+			  Molestiae earum sunt dolorum libero culpa minima!
+			</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</div>
+
+<br /><br /><br /><br /><br />
+<div class="section_our_solution">
+	<div class="our_solution_category">
+	  <div class="solution_cards_box">
+		<h2>Rules</h2>
+		<div class="solution_card">
+		  <div class="hover_color_bubble"></div>
+		  <div class="solu_title">
+			<h3>Demo 1</h3>
+		  </div>
+		  <div class="solu_description">
+			<p>
+			  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+			  velit sequi mollitia numquam eligendi nisi quam pariatur magnam?
+			  Sequi nulla corrupti nobis consequuntur obcaecati voluptatum
+			  quos harum eveniet maxime ducimus sunt beatae ad ex laudantium
+			  earum, ullam illo, quo at tempore exercitationem delectus?
+			  Molestiae earum sunt dolorum libero culpa minima!
+			</p>
+		  </div>
+		</div>
+		<div class="solution_card">
+		  <div class="hover_color_bubble"></div>
+		  <div class="solu_title">
+			<h3>Demo 2</h3>
+		  </div>
+		  <div class="solu_description">
+			<p>
+			  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+			  velit sequi mollitia numquam eligendi nisi quam pariatur magnam?
+			  Sequi nulla corrupti nobis consequuntur obcaecati voluptatum
+			  quos harum eveniet maxime ducimus sunt beatae ad ex laudantium
+			  earum, ullam illo, quo at tempore exercitationem delectus?
+			  Molestiae earum sunt dolorum libero culpa minima!
+			</p>
+		  </div>
+		</div>
+	  </div>
+	  <!--  -->
+	  <div class="solution_cards_box sol_card_top_3">
+		<div class="solution_card">
+		  <div class="hover_color_bubble"></div>
+		  <div class="solu_title">
+			<h3>Demo 3</h3>
+		  </div>
+		  <div class="solu_description">
+			<p>
+			  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+			  velit sequi mollitia numquam eligendi nisi quam pariatur magnam?
+			  Sequi nulla corrupti nobis consequuntur obcaecati voluptatum
+			  quos harum eveniet maxime ducimus sunt beatae ad ex laudantium
+			  earum, ullam illo, quo at tempore exercitationem delectus?
+			  Molestiae earum sunt dolorum libero culpa minima!
+			</p>
+		  </div>
+		</div>
+		<div class="solution_card">
+		  <div class="hover_color_bubble"></div>
+		  <div class="solu_title">
+			<h3>Demo 4</h3>
+		  </div>
+		  <div class="solu_description">
+			<p>
+			  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+			  velit sequi mollitia numquam eligendi nisi quam pariatur magnam?
+			  Sequi nulla corrupti nobis consequuntur obcaecati voluptatum
+			  quos harum eveniet maxime ducimus sunt beatae ad ex laudantium
+			  earum, ullam illo, quo at tempore exercitationem delectus?
+			  Molestiae earum sunt dolorum libero culpa minima!
+			</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+<br /><br /><br /><br /><br />
+
+<div class="section_our_solution">
+	<div class="our_solution_category">
+	  <div class="solution_cards_box">
+		
+		<div class="hori-timeline" dir="ltr">
+			 <h2>Rules</h2>
+				  <ul class="list-inline events">
+					  <li class="list-inline-item event-list">
+						  <div class="px-4">
+							  <div class="event-date">2 June</div>
+							  <h5 class="font-size-16">Event One</h5>
+							  <p class="text-muted">It will be as simple as occidental in fact it will be Occidental Cambridge friend</p>
+							  <div>
+								  <a href="#" class="btn btn-green btn-sm">Read more</a>
+							  </div>
+						  </div>
+					  </li>
+					  <li class="list-inline-item event-list">
+						  <div class="px-4">
+							  <div class="event-date">5 June</div>
+							  <h5 class="font-size-16">Event Two</h5>
+							  <p class="text-muted">Everyone realizes why a new common language one could refuse translators.</p>
+							  <div>
+								  <a href="#" class="btn btn-green btn-sm">Read more</a>
+							  </div>
+						  </div>
+					  </li>
+					   <li class="list-inline-item event-list">
+						  <div class="px-4">
+							  <div class="event-date">5 June</div>
+							  <h5 class="font-size-16">Event Two</h5>
+							  <p class="text-muted">Everyone realizes why a new common language one could refuse translators.</p>
+							  <div>
+								  <a href="#" class="btn btn-green btn-sm">Read more</a>
+							  </div>
+						  </div>
+					  </li>
+				   
+				  </ul>
+			  </div>
+	  </div>
+	</div>
+  </div>
+
+{% endblock %}
