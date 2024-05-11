@@ -287,7 +287,7 @@ msgid "Search for matching users"
 msgstr "Pesquisar usuários correspondentes"
 
 #: CTFd/themes/core-beta/templates/base.html:49
-msgid "Powered by CTFd"
+msgid "2024 © | Cyber Hacktivators Club "
 msgstr "Desenvolvido por CTFd"
 
 #: CTFd/themes/core-beta/templates/challenge.html:11
