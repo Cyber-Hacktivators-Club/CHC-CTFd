@@ -385,7 +385,10 @@ def settings():
     )
 
 
-@views.route("/", defaults={"route": "index"})
+@views.route("/")
+def home_page():
+    return render_template("index.html")
+
 @views.route("/<path:route>")
 def static_html(route):
     """
