@@ -1,9 +1,3 @@
 [submodule "CTFd/plugins/CTFd-Docker-Plugin"]
 	path = CTFd/plugins/containers
 	url = git@github.com:CloudMeshSolutions/CTFd-Docker-Plugin.git
-[submodule "CTFd/themes/CTFD-odin-theme"]
-	path = CTFd/themes/CTFD-odin-theme
-	url = https://github.com/0xdevsachin/CTFD-odin-theme.git
-[submodule "CTFd/themes/CTFD-crimson-theme"]
-	path = CTFd/themes/CTFD-crimson-theme
-	url = git@github.com:0xdevsachin/CTFD-crimson-theme.git
