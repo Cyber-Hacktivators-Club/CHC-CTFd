@@ -1,5 +1,3 @@
-version: "2"
-
 services:
   ctfd:
     build: .
@@ -40,10 +38,10 @@ services:
     image: mariadb:10.11
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB__MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=${DB__MYSQL_USER}
-      - MYSQL_PASSWORD=${DB__MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${DB__MYSQL_DATABASE}
+      - MARIADB_ROOT_PASSWORD=${DB__MYSQL_ROOT_PASSWORD}
+      - MARIADB_USER=${DB__MYSQL_USER}
+      - MARIADB_PASSWORD=${DB__MYSQL_PASSWORD}
+      - MARIADB_DATABASE=${DB__MYSQL_DATABASE}
       - MARIADB_AUTO_UPGRADE=1
     volumes:
       - .data/mysql:/var/lib/mysql
@@ -68,20 +66,20 @@ services:
       internal:
 
   # flags:
-    # build: /srv/www/ctf-flag-validator
-    # ports:
-    #   - "9512:9512"
-    # environment:
-    #   - CTFD_ADMIN_TOKEN=${flags__CTFD_ADMIN_TOKEN}
-    #   - CTFD_INSTANCE=${flags__CTFD_INSTANCE}
-    #   - DISCORD_WEBHOOK_URL=${flags__DISCORD_WEBHOOK_URL}
-    #   - API_HOST="0.0.0.0"
-    #   - API_PORT=9512
-    #   - VERIFICATION_DELAY=1
-    #   - DB_NAME="flags.db"
-    # volumes:
-    #   - /srv/www/ctf-flag-validator/:/app/
-    # restart: always
+  # build: /srv/www/ctf-flag-validator
+  # ports:
+  #   - "9512:9512"
+  # environment:
+  #   - CTFD_ADMIN_TOKEN=${flags__CTFD_ADMIN_TOKEN}
+  #   - CTFD_INSTANCE=${flags__CTFD_INSTANCE}
+  #   - DISCORD_WEBHOOK_URL=${flags__DISCORD_WEBHOOK_URL}
+  #   - API_HOST="0.0.0.0"
+  #   - API_PORT=9512
+  #   - VERIFICATION_DELAY=1
+  #   - DB_NAME="flags.db"
+  # volumes:
+  #   - /srv/www/ctf-flag-validator/:/app/
+  # restart: always
 
 networks:
   default:
