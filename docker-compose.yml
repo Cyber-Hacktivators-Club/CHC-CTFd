@@ -33,6 +33,7 @@ services:
       - ./conf/nginx/privkey.pem:/certificates/privkey.pem:ro
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - ctfd
 
