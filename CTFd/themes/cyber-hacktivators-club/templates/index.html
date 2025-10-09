@@ -1,176 +1,525 @@
-<style>
-  body {
-    background: radial-gradient(circle at 20% 20%, black, black);
-    color: #0a0a0a;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
-
- .hero {
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: red;
-  text-align: center;
-  height: 90vh; /* 👈 makes it cover full viewport height */
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-
-  .hero h1 {
-    font-size: 5rem;
-    color: #2de45b;
-    text-shadow: 0 0 20px #2de45b;
-    animation: glow 2s ease-in-out infinite alternate;
-  }
-
-  @keyframes glow {
-    from { text-shadow: 0 0 10px #2de45b, 0 0 20px #2de45b; }
-    to { text-shadow: 0 0 30px #2de45b, 0 0 60px #2de45b; }
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-    color: #cccccc;
-    max-width: 700px;
-    margin: 20px auto;
-  }
-.hero .btn {
-  position: relative;
-  top: 35px;
-}
-
-
-  .cta-btn {
-    background: #2de45b;
-    color: #000;
-    border: none;
-    padding: 15px 30px;
-    font-weight: bold;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: all 0.3s;
-    box-shadow: 0 0 15px #2de45b;
-  }
-
-  .cta-btn:hover {
-    background: #2de45b;
-    box-shadow: 0 0 25px #0ff;
-    transform: scale(1.05);
-  }
-
-  .glitch {
-    padding-bottom:20px;
-    font-size: 10rem;
-    color: #2de45b;
-    position: relative;
-  }
-
-  .glitch::before, .glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    clip: rect(0, 900px, 0, 0);
-  }
-
-  .glitch::before {
-    animation: glitchTop 2s infinite linear alternate-reverse;
-    color: #f0f;
-  }
-
-  .glitch::after {
-    animation: glitchBottom 2s infinite linear alternate-reverse;
-    color: #0ff;
-  }
-
-  @keyframes glitchTop {
-    0% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-    20% { clip: rect(0, 9999px, 20px, 0); transform: translate(-2px, -2px); }
-    40% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-    60% { clip: rect(0, 9999px, 20px, 0); transform: translate(2px, 2px); }
-    80% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-    100% { clip: rect(0, 9999px, 20px, 0); transform: translate(-1px, 1px); }
-  }
-
-  @keyframes glitchBottom {
-    0% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-    20% { clip: rect(10px, 9999px, 9999px, 0); transform: translate(2px, 2px); }
-    40% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-    60% { clip: rect(10px, 9999px, 9999px, 0); transform: translate(-2px, -1px); }
-    80% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
-    100% { clip: rect(10px, 9999px, 9999px, 0); transform: translate(1px, -1px); }
-  }
-
-  footer {
-    margin-top: 60px;
-    font-size: 0.9rem;
-    color: #777;
-  }
-
-  .particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .content {
-    position: relative;
-    z-index: 2;
-  }
-</style>
-
-<div class="hero">
-  <div class="particles"></div>
-  <div class="content">
-    <h1 class="glitch" data-text="CHC CTF 2025">CHC CTF 2025</h1>
-    <p>Welcome to the official Cyber Hackivators Club Capture The Flag competition.<br>
-    No sleep. No limits. Just pure cyber adrenaline!</p>
-    <a href="/challenges" class="cta-btn btn" >Enter The Arena ⚡</a>
-  </div>
-</div>
-
-<footer>
-  Organized by <strong>Cyber Hackivators Club (CHC)</strong><br>
-  COMSATS University Islamabad • 24-Hour National CTF Event<br>
-  <a href="https://github.com/Cyber-Hacktivators-Club" target="_blank" style="color:#2de45b;">GitHub</a> •
-  <a href="https://www.linkedin.com/company/cyberhackivatorsclub" target="_blank" style="color:#2de45b;">Instagram</a>
-</footer>
-
-<script>
-  // Simple floating particles effect
-  const num = 50;
-  for (let i = 0; i < num; i++) {
-    const dot = document.createElement('div');
-    dot.style.position = 'absolute';
-    dot.style.width = '3px';
-    dot.style.height = '3px';
-    dot.style.borderRadius = '50%';
-    dot.style.background = '#0ff';
-    dot.style.opacity = Math.random();
-    dot.style.left = Math.random() * 100 + '%';
-    dot.style.top = Math.random() * 100 + '%';
-    dot.style.animation = `float ${3 + Math.random() * 4}s linear infinite`;
-    document.querySelector('.particles').appendChild(dot);
-  }
-
-  const style = document.createElement('style');
-  style.innerHTML = `
-    @keyframes float {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { transform: translateY(-20px) scale(0.8); opacity: 0.8; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHC CTF 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-  `;
-  document.head.appendChild(style);
-</script>
+
+    body, html {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+      color: #fff;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      padding: 20px;
+      background: 
+        radial-gradient(ellipse at top, rgba(45, 228, 91, 0.15), transparent 50%),
+        radial-gradient(ellipse at bottom, rgba(45, 228, 91, 0.1), transparent 50%),
+        #000;
+    }
+
+    /* Animated grid background */
+    .grid-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(45, 228, 91, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45, 228, 91, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridMove 20s linear infinite;
+      opacity: 0.3;
+    }
+
+    @keyframes gridMove {
+      0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+      100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+    }
+
+    /* Scanline effect */
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        rgba(45, 228, 91, 0.05) 51%,
+        transparent 52%
+      );
+      background-size: 100% 4px;
+      animation: scan 8s linear infinite;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    @keyframes scan {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100vh; }
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      padding: 8px 20px;
+      background: rgba(45, 228, 91, 0.1);
+      border: 2px solid #2de45b;
+      border-radius: 30px;
+      color: #2de45b;
+      font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+      animation: pulse 2s ease-in-out infinite;
+      text-transform: uppercase;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 10px rgba(45, 228, 91, 0.5); }
+      50% { box-shadow: 0 0 30px rgba(45, 228, 91, 0.8); }
+    }
+
+    .glitch {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(3rem, 12vw, 8rem);
+      font-weight: 900;
+      color: #2de45b;
+      position: relative;
+      display: inline-block;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      animation: textGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes textGlow {
+      from { 
+        text-shadow: 
+          0 0 10px #2de45b,
+          0 0 20px #2de45b,
+          0 0 30px #2de45b;
+      }
+      to { 
+        text-shadow: 
+          0 0 20px #2de45b,
+          0 0 40px #2de45b,
+          0 0 60px #2de45b,
+          0 0 80px #2de45b;
+      }
+    }
+
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .glitch::before {
+      animation: glitchTop 3s infinite linear alternate-reverse;
+      color: #00ff88;
+      clip: rect(0, 9999px, 0, 0);
+    }
+
+    .glitch::after {
+      animation: glitchBottom 2.5s infinite linear alternate-reverse;
+      color: #00ff41;
+      clip: rect(0, 9999px, 0, 0);
+    }
+
+    @keyframes glitchTop {
+      0% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      10% { clip: rect(0, 9999px, 30px, 0); transform: translate(-3px, -2px); }
+      20% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      30% { clip: rect(0, 9999px, 30px, 0); transform: translate(2px, 3px); }
+      50% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      60% { clip: rect(0, 9999px, 30px, 0); transform: translate(-2px, 2px); }
+      80% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      100% { clip: rect(0, 9999px, 30px, 0); transform: translate(1px, -1px); }
+    }
+
+    @keyframes glitchBottom {
+      0% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      15% { clip: rect(15px, 9999px, 9999px, 0); transform: translate(2px, 3px); }
+      25% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      40% { clip: rect(15px, 9999px, 9999px, 0); transform: translate(-3px, -2px); }
+      55% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      70% { clip: rect(15px, 9999px, 9999px, 0); transform: translate(2px, -1px); }
+      85% { clip: rect(0, 9999px, 0, 0); transform: translate(0); }
+      100% { clip: rect(15px, 9999px, 9999px, 0); transform: translate(-1px, 2px); }
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: #b0b0b0;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      line-height: 1.8;
+      padding: 0 20px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle strong {
+      color: #2de45b;
+      font-weight: 500;
+    }
+
+    .cta-btn {
+      position: relative;
+      background: linear-gradient(135deg, #2de45b 0%, #00ff88 100%);
+      color: #000;
+      border: none;
+      padding: 18px 45px;
+      font-weight: 700;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.4s ease;
+      box-shadow: 
+        0 0 20px rgba(45, 228, 91, 0.6),
+        0 5px 15px rgba(0, 0, 0, 0.3);
+      display: inline-block;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .cta-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 0 40px rgba(45, 228, 91, 1),
+        0 0 60px rgba(45, 228, 91, 0.8),
+        0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .cta-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Info stats */
+    .stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 50px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 15px 25px;
+      background: rgba(45, 228, 91, 0.05);
+      border: 1px solid rgba(45, 228, 91, 0.3);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-number {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: #2de45b;
+      font-family: 'Orbitron', sans-serif;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 5px;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      right: 0;
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      color: #666;
+      text-align: center;
+      padding: 0 20px;
+      letter-spacing: 0.5px;
+    }
+
+    footer strong {
+      color: #2de45b;
+    }
+
+    footer a {
+      color: #2de45b;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    footer a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #2de45b;
+      transition: width 0.3s;
+    }
+
+    footer a:hover::after {
+      width: 100%;
+    }
+
+    footer a:hover {
+      color: #00ff88;
+    }
+
+    /* Floating particles */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: #2de45b;
+      border-radius: 50%;
+    }
+
+    /* Cyber corner accents */
+    .corner {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border: 2px solid rgba(45, 228, 91, 0.3);
+      z-index: 1;
+    }
+
+    .corner-tl {
+      top: 20px;
+      left: 20px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    .corner-tr {
+      top: 20px;
+      right: 20px;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    .corner-bl {
+      bottom: 60px;
+      left: 20px;
+      border-right: none;
+      border-top: none;
+    }
+
+    .corner-br {
+      bottom: 60px;
+      right: 20px;
+      border-left: none;
+      border-top: none;
+    }
+
+    @media (max-width: 768px) {
+      .stats {
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .stat-item {
+        padding: 10px 20px;
+      }
+
+      .corner {
+        width: 60px;
+        height: 60px;
+      }
+
+      .badge {
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cta-btn {
+        padding: 15px 35px;
+      }
+
+      .stats {
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="grid-bg"></div>
+    <div class="scanline"></div>
+    <div class="particles"></div>
+    
+    <!-- Corner accents -->
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <div class="content">
+      <div class="badge">🔥 LIVE NOW • 2025</div>
+      <h1 class="glitch" data-text="CHC CTF">CHC CTF</h1>
+      <p class="subtitle">
+        Welcome to the ultimate <strong>Cyber Hackivators Club</strong> Capture The Flag competition.<br>
+        No sleep. No limits. Just <strong>pure cyber adrenaline</strong>.
+      </p>
+      <a href="/challenges" class="cta-btn">
+        <span>Enter The Arena ⚡</span>
+      </a>
+
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-number">24H</span>
+          <span class="stat-label">Duration</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">100+</span>
+          <span class="stat-label">Challenges</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">₨50K</span>
+          <span class="stat-label">Prize Pool</span>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      Organized by <strong>Cyber Hackivators Club (CHC)</strong><br>
+      COMSATS University Islamabad • 24-Hour National CTF Event<br>
+      <a href="https://github.com/Cyber-Hacktivators-Club" target="_blank">GitHub</a> •
+      <a href="https://www.linkedin.com/company/cyberhackivatorsclub" target="_blank">LinkedIn</a>
+    </footer>
+  </div>
+
+  <script>
+    // Enhanced particle system
+    const particlesContainer = document.querySelector('.particles');
+    const particleCount = 60;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      
+      const size = Math.random() * 4 + 1;
+      const duration = Math.random() * 5 + 3;
+      const delay = Math.random() * 3;
+      const startX = Math.random() * 100;
+      const endX = startX + (Math.random() - 0.5) * 30;
+      
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.left = startX + '%';
+      particle.style.bottom = '-5px';
+      particle.style.opacity = Math.random() * 0.5 + 0.3;
+      particle.style.animation = `floatUp${i} ${duration}s ease-in ${delay}s infinite`;
+      
+      const keyframes = `
+        @keyframes floatUp${i} {
+          0% {
+            transform: translateY(0) translateX(0) scale(1);
+            opacity: ${Math.random() * 0.5 + 0.3};
+          }
+          50% {
+            opacity: ${Math.random() * 0.8 + 0.2};
+          }
+          100% {
+            transform: translateY(-100vh) translateX(${endX - startX}vw) scale(${Math.random() * 0.5 + 0.5});
+            opacity: 0;
+          }
+        }
+      `;
+      
+      const style = document.createElement('style');
+      style.innerHTML = keyframes;
+      document.head.appendChild(style);
+      
+      particlesContainer.appendChild(particle);
+    }
+
+    // Add dynamic glow to button on mouse move
+    const btn = document.querySelector('.cta-btn');
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      btn.style.setProperty('--mouse-x', x + 'px');
+      btn.style.setProperty('--mouse-y', y + 'px');
+    });
+  </script>
+</body>
+</html>
