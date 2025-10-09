@@ -11,6 +11,20 @@
       padding: 0;
       box-sizing: border-box;
     }
+    .navbar {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+  position: fixed !important;
+  top: 0;
+  width: 100%;
+  z-index: 9999 !important;
+}
+
+.hero-section {
+  margin-top: 90px; /* adjust depending on navbar height */
+}
+
 
     :root {
       --primary-green: #00ff41;
@@ -544,7 +558,7 @@
           cryptography, forensics, reverse engineering, and more. Are you ready to hack the system?
         </p>
         <div class="cta-group">
-          <a href="/register" class="btn btn-primary">View Challenges</a>
+          <a href="/challenges" class="btn btn-primary">View Challenges</a>
         </div>
 
         <div class="terminal-window">
@@ -612,7 +626,7 @@
             </p>
           </div>
           <div class="feature-card">
-            <span class="feature-icon">🎯</span>
+            <span class="feature-icon">⚙️</span>
             <h3 class="feature-title">Aritifical intelligence</h3>
             <p class="feature-description">
               Challenges that explore machine learning, neural networks, and AI-driven cybersecurity concepts to uncover patterns and make smart decisions.
