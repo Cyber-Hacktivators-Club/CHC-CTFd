@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CHC CTF 2025 - Capture The Flag</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Load CTFd default styling -->
-  <link rel="stylesheet" href="{{ url_for('views.themes', path='core/static/css/main.css') }}">
-  <script src="{{ url_for('views.themes', path='core/static/js/main.js') }}" defer></script>
+  
 
   <style>
     * {
@@ -28,6 +26,30 @@
 .hero-section {
   margin-top: 90px; /* adjust depending on navbar height */
 }
+ul.navbar {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  background: #0a0a0a;
+  padding: 15px 30px;
+  border-bottom: 2px solid #0f0;
+}
+
+ul.navbar li {
+  display: inline;
+}
+
+ul.navbar li a {
+  color: #0f0;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+ul.navbar li a:hover {
+  color: #fff;
+}
+
 
 
     :root {
