@@ -1,3 +1,4 @@
+{% extends "base.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,13 @@
   <link rel="icon" type="image/x-icon" href="static/img/Logo.png">
 
 
+
+</head>
+<body>
+
+  <div class="scanline"></div> 
+  
+{% block content %}
   <style>
     * {
       margin: 0;
@@ -147,7 +155,7 @@
     }
 
     .hero-section {
-      padding: 100px 0 80px;
+      padding: 10px 0 20px;
       text-align: center;
     }
 
@@ -531,12 +539,6 @@
       }
     }
   </style>
-</head>
-<body>
-      <!-- {% include "components/navbar.html" with context %}-->
-  <div class="scanline"></div> 
-  
-
 
   <main>
     <section class="hero-section">
@@ -669,6 +671,7 @@
       </div>
     </div>
   </footer>
+{% endblock %}
 
   <script>
     // Smooth scrolling for anchor links
