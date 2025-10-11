@@ -1,3 +1,6 @@
 [submodule "CTFd/plugins/dynamic_challenges_mod"]
 	path = CTFd/plugins/dynamic_challenges_mod
 	url = git@github.com:sigpwny/ctfd-dynamic-challenges-mod.git
+[submodule "CTFd/plugins/containers"]
+	path = CTFd/plugins/containers
+	url = git@github.com:Cyber-Hacktivators-Club/ctfd-containers-plugin
