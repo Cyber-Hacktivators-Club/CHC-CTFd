@@ -607,7 +607,6 @@
         </p>
         <div class="cta-group">
           <a href="/challenges" class="btn btn-primary">View Challenges</a>
-          <a href="#register" class="btn btn-secondary">Register Now</a>
         </div>
       </div>
     </section>
@@ -651,19 +650,12 @@
               <li>FIFA 25 Tournament</li>
             </ul>
             <div class="qr-section">
-              <div class="qr-code">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="200" height="200" fill="white"/>
-                  <rect x="10" y="10" width="50" height="50" fill="black"/>
-                  <rect x="140" y="10" width="50" height="50" fill="black"/>
-                  <rect x="10" y="140" width="50" height="50" fill="black"/>
-                  <rect x="30" y="30" width="10" height="10" fill="white"/>
-                  <rect x="160" y="30" width="10" height="10" fill="white"/>
-                  <rect x="30" y="160" width="10" height="10" fill="white"/>
-                </svg>
-              </div>
-              <div class="qr-label">Register Here!</div>
+            <div class="qr-code">
+                <img src="{{ url_for('static', filename='images/qr.png') }}" alt="QR Code" />
             </div>
+            <div class="qr-label">Register Here!</div>
+            </div>
+
           </div>
         </div>
       </div>
