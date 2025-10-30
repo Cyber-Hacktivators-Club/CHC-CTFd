@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUI Tech Fest CTF 2025 - Capture The Flag</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="static/img/Logo.png">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      /* Updated color scheme from neon green to cyan/teal with dark blue background */
+      --primary-cyan: #00d9ff;
+      --secondary-cyan: #00b8d4;
+      --dark-bg: #0a1628;
+      --card-bg: #0f1f2e;
+      --border-cyan: #00d9ff33;
+      --text-gray: #8b9a9f;
+      --glow: 0 0 20px rgba(0, 217, 255, 0.3);
+      --accent-purple: #7c3aed;
+    }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--dark-bg);
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .scanline {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        rgba(0, 217, 255, 0.02) 50%
+      );
+      background-size: 100% 4px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.1;
+      animation: scan 8s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100%); }
+    }
+
+    /* Added circuit board design elements */
+    .circuit-corner {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.15;
+    }
+
+    .circuit-top-left {
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 200px;
+      border-top: 2px solid var(--primary-cyan);
+      border-left: 2px solid var(--primary-cyan);
+      border-radius: 0 0 50px 0;
+    }
+
+    .circuit-top-right {
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      border-top: 2px solid var(--primary-cyan);
+      border-right: 2px solid var(--primary-cyan);
+      border-radius: 0 0 0 50px;
+    }
+
+    .circuit-bottom-left {
+      bottom: 0;
+      left: 0;
+      width: 200px;
+      height: 200px;
+      border-bottom: 2px solid var(--primary-cyan);
+      border-left: 2px solid var(--primary-cyan);
+      border-radius: 50px 0 0 0;
+    }
+
+    .circuit-bottom-right {
+      bottom: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      border-bottom: 2px solid var(--primary-cyan);
+      border-right: 2px solid var(--primary-cyan);
+      border-radius: 0 50px 0 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    header {
+      padding: 30px 0;
+      border-bottom: 1px solid var(--border-cyan);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--primary-cyan);
+      text-shadow: var(--glow);
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    .logo::before {
+      content: '> ';
+      color: var(--primary-cyan);
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--text-gray);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-cyan);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-cyan);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hero-section {
+      padding: 60px 0 40px;
+      text-align: center;
+    }
+
+    .status-bar {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--primary-cyan);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      padding: 8px 20px;
+      border: 1px solid var(--border-cyan);
+      border-radius: 50px;
+      background: rgba(0, 217, 255, 0.05);
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      /* Updated gradient to use cyan instead of green */
+      background: linear-gradient(135deg, #fff 30%, var(--primary-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--text-gray);
+      margin-bottom: 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .btn {
+      padding: 15px 35px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--primary-cyan);
+      color: var(--dark-bg);
+      box-shadow: var(--glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary-cyan);
+      border: 2px solid var(--primary-cyan);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 217, 255, 0.1);
+    }
+
+    /* Added modules grid layout for Technical and Gaming sections */
+    .modules-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin: 80px 0;
+      align-items: start;
+    }
+
+    .module-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border-cyan);
+      border-radius: 12px;
+      padding: 40px;
+      transition: all 0.3s;
+    }
+
+    .module-section:hover {
+      border-color: var(--primary-cyan);
+      box-shadow: var(--glow);
+    }
+
+    .module-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .module-icon {
+      font-size: 2.5rem;
+    }
+
+    .module-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-cyan);
+    }
+
+    .module-title-accent {
+      color: var(--secondary-cyan);
+      font-weight: 400;
+      font-size: 1.2rem;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .module-list {
+      list-style: none;
+    }
+
+    .module-list li {
+      color: var(--text-gray);
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-cyan);
+      font-size: 1.1rem;
+      transition: all 0.3s;
+    }
+
+    .module-list li:last-child {
+      border-bottom: none;
+    }
+
+    .module-list li:hover {
+      color: var(--primary-cyan);
+      padding-left: 10px;
+    }
+
+    .module-list li::before {
+      content: '• ';
+      color: var(--primary-cyan);
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .qr-section {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 20px auto;
+      border: 2px solid var(--primary-cyan);
+    }
+
+    .qr-label {
+      color: var(--primary-cyan);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 15px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin: 80px 0;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-cyan);
+      border-radius: 8px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow);
+      border-color: var(--primary-cyan);
+    }
+
+    .stat-number {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary-cyan);
+      margin-bottom: 10px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .stat-label {
+      color: var(--text-gray);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .event-info {
+      background: var(--card-bg);
+      border: 2px solid var(--primary-cyan);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      margin: 80px 0;
+      box-shadow: var(--glow);
+    }
+
+    .event-subtitle {
+      color: var(--text-gray);
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .prize-text {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-cyan);
+      margin-bottom: 30px;
+    }
+
+    .event-dates {
+      display: inline-block;
+      border: 2px solid var(--primary-cyan);
+      border-radius: 50px;
+      padding: 15px 40px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-cyan);
+      margin-bottom: 20px;
+    }
+
+    .organized-by {
+      color: var(--text-gray);
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+
+    .organized-by strong {
+      color: var(--primary-cyan);
+    }
+
+    .terminal-window {
+      background: #000;
+      border: 1px solid var(--primary-cyan);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 60px auto;
+      max-width: 600px;
+      font-family: 'Share Tech Mono', monospace;
+      box-shadow: var(--glow);
+    }
+
+    .terminal-header {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .terminal-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--primary-cyan);
+    }
+
+    .terminal-text {
+      color: var(--primary-cyan);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--primary-cyan);
+      animation: blink 1s infinite;
+    }
+
+    footer {
+      padding: 60px 0 30px;
+      border-top: 1px solid var(--border-cyan);
+      margin-top: 80px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section h3 {
+      color: var(--primary-cyan);
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+    }
+
+    .footer-section p,
+    .footer-section a {
+      color: var(--text-gray);
+      text-decoration: none;
+      line-height: 1.8;
+      display: block;
+      transition: color 0.3s;
+    }
+
+    .footer-section a:hover {
+      color: var(--primary-cyan);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border-cyan);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .social-links a:hover {
+      background: var(--primary-cyan);
+      color: var(--dark-bg);
+      border-color: var(--primary-cyan);
+      transform: translateY(-3px);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid var(--border-cyan);
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 15px;
+      }
+
+      .hero-section {
+        padding: 40px 0 30px;
+      }
+
+      .modules-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+
+      .circuit-corner {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scanline"></div>
+  <!-- Added circuit board corner decorations -->
+  <div class="circuit-corner circuit-top-left"></div>
+  <div class="circuit-corner circuit-top-right"></div>
+  <div class="circuit-corner circuit-bottom-left"></div>
+  <div class="circuit-corner circuit-bottom-right"></div>
+
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <div class="status-bar">[ SYSTEM_ONLINE ] CUI_TECH_FEST_2025</div>
+        <h1 class="hero-title">CUI Tech Fest<br>CTF 2025</h1>
+        <p class="hero-subtitle">
+          Pakistan's premier Capture The Flag competition. Test your cybersecurity skills across multiple domains and compete for glory and prizes.
+        </p>
+        <div class="cta-group">
+          <a href="/challenges" class="btn btn-primary">View Challenges</a>
+          <a href="#register" class="btn btn-secondary">Register Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Restructured content to match new theme with Technical and Gaming modules -->
+    <section class="modules-container">
+      <div class="container" style="grid-column: 1 / -1;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px;">
+          <div class="module-section">
+            <div class="module-header">
+              <span class="module-icon">⚙️</span>
+              <div>
+                <div class="module-title">TECHNICAL</div>
+                <span class="module-title-accent">MODULES</span>
+              </div>
+            </div>
+            <ul class="module-list">
+              <li>CS Quiz</li>
+              <li>Data Quest</li>
+              <li>Speed Coding</li>
+              <li>Auto Test Arena</li>
+              <li>AI Agents Arena</li>
+              <li>Web Innovators Hackathon</li>
+              <li>Capture The Flag (CTF)</li>
+              <li>Tech Scavenger Hunt</li>
+              <li>Geo AI Mapping</li>
+            </ul>
+          </div>
+
+          <div class="module-section">
+            <div class="module-header">
+              <span class="module-icon">🎮</span>
+              <div>
+                <div class="module-title">GAMING</div>
+                <span class="module-title-accent">MODULES</span>
+              </div>
+            </div>
+            <ul class="module-list">
+              <li>Valorant Tournament</li>
+              <li>Tekken 8 Tournament</li>
+              <li>FIFA 25 Tournament</li>
+            </ul>
+            <div class="qr-section">
+              <div class="qr-code">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="200" height="200" fill="white"/>
+                  <rect x="10" y="10" width="50" height="50" fill="black"/>
+                  <rect x="140" y="10" width="50" height="50" fill="black"/>
+                  <rect x="10" y="140" width="50" height="50" fill="black"/>
+                  <rect x="30" y="30" width="10" height="10" fill="white"/>
+                  <rect x="160" y="30" width="10" height="10" fill="white"/>
+                  <rect x="30" y="160" width="10" height="10" fill="white"/>
+                </svg>
+              </div>
+              <div class="qr-label">Register Here!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="event-info">
+      <div class="container">
+        <p class="event-subtitle">Inter-University Fest</p>
+        <div class="prize-text">PRIZE: 300K+</div>
+        <div class="event-dates">3rd - 8th November</div>
+        <p class="organized-by">Organized By <strong>CUI TECH SOCIETY</strong></p>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="container" style="grid-column: 1 / -1;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+          <div class="stat-card">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Challenges</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">1000+</div>
+            <div class="stat-label">Participants</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Universities</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">24h</div>
+            <div class="stat-label">Duration</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <span class="terminal-btn"></span>
+        <span class="terminal-btn"></span>
+        <span class="terminal-btn"></span>
+      </div>
+      <div class="terminal-text">
+        $ whoami<br>
+        > cyber_warrior<br>
+        $ ls challenges/<br>
+        > web/ crypto/ forensics/ pwn/ rev/<br>
+        $ cat flag.txt<br>
+        > CUI{H4Ck1NG_1S_4W3S0M3}<span class="cursor"></span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About CUI Tech Fest</h3>
+          <p>
+            CUI Tech Fest is COMSATS University's premier technology festival, bringing together innovators, hackers, and tech enthusiasts for an unforgettable experience.
+          </p>
+          <div class="social-links">
+            <a href="https://github.com" target="_blank">G</a>
+            <a href="https://linkedin.com" target="_blank">L</a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <a href="#challenges">Challenges</a>
+          <a href="#scoreboard">Scoreboard</a>
+          <a href="#rules">Rules</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="footer-section">
+          <h3>Resources</h3>
+          <a href="#writeups">Writeups</a>
+          <a href="#archive">Past Events</a>
+          <a href="#team">Our Team</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>COMSATS University Islamabad</p>
+          <p>Park Road, Chak Shahzad</p>
+          <p>Islamabad, Pakistan</p>
+          <p style="margin-top: 10px;">tech.fest@comsats.edu.pk</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 CUI Tech Fest. All rights reserved. | Powered by passion for technology</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all module sections and stat cards
+    document.querySelectorAll('.module-section, .stat-card, .event-info').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Terminal typing effect
+    const terminalText = document.querySelector('.terminal-text');
+    const originalText = terminalText.innerHTML;
+    let index = 0;
+
+    function typeText() {
+      if (index < originalText.length) {
+        terminalText.innerHTML = originalText.substring(0, index) + '<span class="cursor"></span>';
+        index++;
+        setTimeout(typeText, 30);
+      } else {
+        terminalText.innerHTML = originalText + '<span class="cursor"></span>';
+      }
+    }
+
+    // Start typing effect after a delay
+    setTimeout(() => {
+      terminalText.innerHTML = '';
+      index = 0;
+      typeText();
+    }, 500);
+  </script>
+</body>
+</html>
