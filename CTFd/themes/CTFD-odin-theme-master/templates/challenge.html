@@ -1,144 +1,335 @@
-<div class="modal-dialog" role="document">
-	<div class="modal-content">
-		<div class="modal-body">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link active" href="#challenge">Challenge</a>
-				</li>
-				{% block solves %}
-					<li class="nav-item">
-						<a class="nav-link challenge-solves" href="#solves">
-							{% if solves != None %}
-								{{ solves }} {% if solves > 1 %}Solves{% else %}Solves{% endif %}
-							{% endif %}
-						</a>
-					</li>
-				{% endblock %}
-			</ul>
-			<div role="tabpanel">
-				<div class="tab-content">
-					<div role="tabpanel" class="tab-pane fade show active" id="challenge">
-						<h2 class='challenge-name text-center pt-3'>
-							{{ challenge.name }}
-						</h2>
-						<h3 class="challenge-value text-center">
-							{{ challenge.value }}
-						</h3>
+<div class="modal-dialog modal-lg" role="dialog" aria-modal="true" aria-labelledby="challenge-title">
+  <div class="modal-content">
+    <div class="modal-body p-0">
 
-						<div class="challenge-tags text-center">
-							{% block tags %}
-								{% for tag in tags %}
-									<span class='badge badge-info challenge-tag'>{{ tag }}</span>
-								{% endfor %}
-							{% endblock %}
-						</div>
+      <button type="button" class="close position-absolute p-3" data-dismiss="modal" aria-label="Close" style="right:0;">
+        <span aria-hidden="true">&times;</span>
+      </button>
 
-						<span class="challenge-desc">{% block description %}{{ challenge.html }}{% endblock %}</span>
+      <!-- Tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active"
+             id="tab-challenge"
+             data-toggle="tab"
+             href="#challenge"
+             role="tab"
+             aria-controls="challenge"
+             aria-selected="true">
+            Challenge
+          </a>
+        </li>
 
-						<div class="challenge-hints hint-row row">
-							{% for hint in hints %}
-								<div class='col-md-12 hint-button-wrapper text-center mb-3'>
-									<a class="btn btn-info btn-hint btn-block load-hint" href="javascript:;" data-hint-id="{{ hint.id }}">
-										{% if hint.content %}
-											<small>
-												View Hint
-											</small>
-										{% else %}
-											{% if hint.cost %}
-												<small>
-													Unlock Hint for {{ hint.cost }} points
-												</small>
-											{% else %}
-												<small>
-													View Hint
-												</small>
-											{% endif %}
-										{% endif %}
-									</a>
-								</div>
-							{% endfor %}
-						</div>
+        {% block solves %}
+        <li class="nav-item">
+          <a class="nav-link challenge-solves"
+             id="tab-solves"
+             data-toggle="tab"
+             href="#solves"
+             role="tab"
+             aria-controls="solves"
+             aria-selected="false">
+            {% if solves is not none %}
+              {{ solves }} {{ "Solve" if solves == 1 else "Solves" }}
+            {% else %}
+              Solves
+            {% endif %}
+          </a>
+        </li>
+        {% endblock %}
+      </ul>
 
-						<div class="row challenge-files text-center pb-3">
-							{% for file in files %}
-								<div class='col-md-4 col-sm-4 col-xs-12 file-button-wrapper d-block'>
-									<a class='btn btn-info btn-file mb-1 d-inline-block px-2 w-100 text-truncate'
-									   href='{{ file }}'>
-										<i class="fas fa-download"></i>
-										<small>
-											{% set segments = file.split('/') %}
-											{% set file = segments | last %}
-											{% set token = file.split('?') | last %}
-											{% if token %}
-												{{ file | replace("?" + token, "") }}
-											{% else %}
-												{{ file }}
-											{% endif %}
-										</small>
-									</a>
-								</div>
-							{% endfor %}
-						</div>
+      <div class="tab-content">
+        <!-- CHALLENGE TAB -->
+        <div class="tab-pane fade show active" id="challenge" role="tabpanel" aria-labelledby="tab-challenge">
+          <div class="p-4">
 
-						{% if max_attempts > 0 %}
-						<div class="row text-center">
-							<div class="col-md-12">
-								<p>
-									{{ attempts }}/{{ max_attempts }} attempt{{ max_attempts|pluralize }}
-								</p>
-							</div>
-						</div>
-						{% endif %}
+            <!-- Title / Value -->
+            <header class="text-center mb-3">
+              <h2 id="challenge-title" class="challenge-name mb-2">{{ challenge.name }}</h2>
+              <p class="challenge-value h4 text-muted mb-0">{{ challenge.value }}</p>
+            </header>
 
-						<div class="row submit-row">
-							<div class="col-md-9 form-group">
-								{% block input %}
-									<input id="challenge-id" class="challenge-id" type="hidden" value="{{ challenge.id }}">
-									<input id="challenge-input" class="challenge-input" type="text" name="answer" placeholder="Flag"/>
-								{% endblock %}
-							</div>
-							<div class="col-md-3 form-group key-submit">
-								{% block submit %}
-								<button id="challenge-submit" class="challenge-submit" type="submit">
-									Submit
-								</button>
-								{% endblock %}
-							</div>
-						</div>
+            <!-- Tags -->
+            <div class="challenge-tags text-center mb-3">
+              {% block tags %}
+              {% for tag in tags %}
+                <span class="badge badge-info challenge-tag mx-1">{{ tag }}</span>
+              {% endfor %}
+              {% endblock %}
+            </div>
 
-						<div class="row notification-row">
-							<div class="col-md-12">
-								<div id="result-notification" class="alert alert-dismissable text-center w-100"
-									 role="alert" style="display: none;">
-									<strong id="result-message"></strong>
-								</div>
-							</div>
-						</div>
-					</div>
+            <!-- Description -->
+            <div class="challenge-desc mb-3">
+              {% block description %}{{ challenge.html }}{% endblock %}
+            </div>
 
-					<div role="tabpanel" class="tab-pane fade" id="solves">
-						<div class="row">
-							<div class="col-md-12">
-								<table class="table table-striped text-center">
-									<thead>
-									<tr>
-										<td><b>Name</b>
-										</td>
-										<td><b>Date</b>
-										</td>
-									</tr>
-									</thead>
-									<tbody id="challenge-solves-names">
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+            <!-- Connection Info -->
+            {% if challenge.connection_info %}
+            <div class="mb-3">
+              <div class="challenge-connection-info">
+                {% block connection_info %}
+                  {% set conn = challenge.connection_info %}
+                  {% if conn.startswith("http") %}
+                    {{ conn | urlize(target="_blank", rel="noopener") }}
+                  {% else %}
+                    <code class="d-inline-block">{{ conn }}</code>
+                  {% endif %}
+                {% endblock %}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Hints -->
+            <div class="row challenge-hints">
+              {% for hint in hints %}
+                <div class="col-12 col-md-6 mb-2">
+                  <a class="btn btn-outline-info btn-hint btn-block load-hint"
+                     href="javascript:;"
+                     data-hint-id="{{ hint.id }}">
+                    {% if hint.content %}
+                      View Hint
+                    {% else %}
+                      {% if hint.cost %}Unlock Hint ({{ hint.cost }} pts){% else %}View Hint{% endif %}
+                    {% endif %}
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Files -->
+            <div class="row challenge-files text-center py-3">
+              {% for file in files %}
+                <div class="col-6 col-md-4 file-button-wrapper d-block">
+                  <a class="btn btn-outline-primary btn-file mb-2 d-inline-block px-2 w-100 text-truncate"
+                     href="{{ file }}"
+                     download>
+                    <i class="fas fa-download mr-1" aria-hidden="true"></i>
+                    <small class="text-monospace">
+                      {% set segments = file.split('/') %}
+                      {% set file = segments | last %}
+                      {% set token = file.split('?') | last %}
+                      {% if token %}
+                        {{ file | replace("?" + token, "") }}
+                      {% else %}
+                        {{ file }}
+                      {% endif %}
+                    </small>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Attempts -->
+            {% if max_attempts > 0 %}
+            <div class="text-center">
+              <p class="text-muted mb-2">
+                {{ attempts }}/{{ max_attempts }} attempt{{ max_attempts|pluralize }}
+              </p>
+            </div>
+            {% endif %}
+
+            <!-- Submit -->
+            <form class="submit-row">
+              <div class="form-row">
+                <div class="col-md-9 form-group mb-2 mb-md-0">
+                  {% block input %}
+                    <input id="challenge-id" class="challenge-id" type="hidden" value="{{ challenge.id }}">
+                    <label for="challenge-input" class="sr-only">Flag</label>
+                    <input id="challenge-input"
+                           class="form-control challenge-input"
+                           type="text"
+                           name="answer"
+                           placeholder="Flag"
+                           autocomplete="off">
+                  {% endblock %}
+                </div>
+                <div class="col-md-3 form-group key-submit mb-0">
+                  {% block submit %}
+                  <button id="challenge-submit" class="btn btn-success btn-block challenge-submit" type="submit">
+                    Submit
+                  </button>
+                  {% endblock %}
+                </div>
+              </div>
+            </form>
+
+            <!-- Notification -->
+            <div class="mt-3">
+              <div id="result-notification" class="alert alert-dismissible text-center w-100 d-none" role="alert" aria-live="polite">
+                <strong id="result-message"></strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- SOLVES TAB -->
+        <div class="tab-pane fade" id="solves" role="tabpanel" aria-labelledby="tab-solves">
+          <div class="p-4">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover text-center mb-0">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody id="challenge-solves-names"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /modal-body -->
+  </div>
 </div>
+
+<style>
+/* Smooth fade + hover polish */
+.nav-tabs .nav-link {
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.nav-tabs .nav-link:hover {
+  background-color: #e9ecef;
+  color: #0056b3;
+}
+
+/* Buttons */
+.btn-hint, .btn-file, .challenge-submit {
+  transition: all 0.25s ease-in-out;
+}
+.btn-hint:hover {
+  background-color: #17a2b8;
+  color: #fff;
+  transform: translateY(-2px);
+}
+.btn-file:hover {
+  background-color: #007bff;
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+.challenge-submit:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+/* Challenge tags */
+.challenge-tag {
+  transition: all 0.25s ease;
+  cursor: default;
+}
+.challenge-tag:hover {
+  background-color: #138496 !important;
+  transform: scale(1.05);
+}
+
+/* Input field focus/hover */
+.challenge-input {
+  transition: box-shadow 0.25s ease;
+  border-radius: 0
+}
+.challenge-input:hover, .challenge-input:focus {
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+  border-color: #28a745;
+}
+
+/* Table rows */
+.table-hover tbody tr:hover {
+  background-color: rgba(0,123,255,0.08);
+  transition: background 0.25s ease;
+}
+
+/* Close button hover */
+.close:hover {
+  color: #dc3545;
+  transform: scale(1.2);
+  transition: all 0.2s ease-in-out;
+}
+
+
+/* 🔥 Challenge Name Hover Effect */
+.challenge-name {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+  transition: all 0.3s ease-in-out;
+  color: #212529;
+}
+.challenge-name::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background: #28a745;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+.challenge-name:hover {
+  color: #28a745;
+  transform: scale(1.05);
+}
+.challenge-name:hover::after {
+  width: 100%;
+  opacity: 1;
+}
+/* Base alert restyle */
+#deployment-info {
+  background: linear-gradient(145deg, #0f172a, #1e293b);
+  border: 1px solid rgba(59,130,246,0.3);
+  border-left: 4px solid #3b82f6;
+  border-radius: 10px;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  transition: all 0.3s ease-in-out;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+/* Hover - glow + lift */
+#deployment-info:hover {
+  transform: translateY(-2px);
+  border-left-color: #60a5fa;
+  box-shadow: 0 0 15px rgba(59,130,246,0.5);
+}
+
+/* Text style */
+#deployment-info span {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #93c5fd;
+  font-weight: 600;
+}
+
+/* Link styling */
+#deployment-info a {
+  font-weight: 600;
+  text-decoration: none;
+  color: #60a5fa;
+  transition: all 0.25s ease-in-out;
+  word-break: break-all;
+}
+#deployment-info a:hover {
+  color: #93c5fd;
+  text-shadow: 0 0 8px rgba(59,130,246,0.6);
+}
+
+/* Optional subtle pulse for live state */
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 8px rgba(59,130,246,0.3); }
+  50% { box-shadow: 0 0 15px rgba(59,130,246,0.6); }
+  100% { box-shadow: 0 0 8px rgba(59,130,246,0.3); }
+}
+#deployment-info.active-glow {
+  animation: glowPulse 2s infinite ease-in-out;
+}</style>
