@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ url_for('views.themes', path='css/fonts.css') }}">
-    <link rel="stylesheet" href="{{ url_for('views.themes', path='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('views.themes', path='css/core.css') }}">
+    <link rel="stylesheet" href="{{ url_for('views.themes', path='css/fonts.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('views.themes', path='css/main.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('views.themes', path='css/core.min.css') }}">
     {% block stylesheets %}
     {% endblock %}
 
@@ -45,12 +45,12 @@
         </div>
     </footer>
 
-    <script defer src="{{ url_for('views.themes', path='js/vendor.bundle.js') }}"></script>
-    <script defer src="{{ url_for('views.themes', path='js/core.js') }}"></script>
-    <script defer src="{{ url_for('views.themes', path='js/helpers.js') }}"></script>
+    <script defer src="{{ url_for('views.themes', path='js/vendor.bundle.min.js') }}"></script>
+    <script defer src="{{ url_for('views.themes', path='js/core.min.js') }}"></script>
+    <script defer src="{{ url_for('views.themes', path='js/helpers.min.js') }}"></script>
 
     {% block entrypoint %}
-    <script defer src="{{ url_for('views.themes', path='js/pages/main.js') }}"></script>
+    <script defer src="{{ url_for('views.themes', path='js/pages/main.min.js') }}"></script>
     {% endblock %}
 
     {% block scripts %}
